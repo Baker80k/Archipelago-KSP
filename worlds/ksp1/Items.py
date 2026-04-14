@@ -121,16 +121,8 @@ SOI_PERMIT_ITEMS: dict[str, ItemData] = {
     "Eeloo Permit":  ItemData(BASE_ID + 104, ItemClassification.progression),
 }
 
-# KSC upgrade items gate region access and flag-plant checks.
-# Tracking Station L2: needed to reach Mun/Minmus and any outer body.
-# VAB L2, Launch Pad L2, Astronaut Complex L2: needed to plant a flag anywhere
-# beyond Kerbin (required for EVA, heavy launches, and patched-conic planning).
-KSC_UPGRADE_ITEMS: dict[str, ItemData] = {
-    "Tracking Station Level 2":  ItemData(BASE_ID + 200, ItemClassification.progression),
-    "VAB Level 2":               ItemData(BASE_ID + 201, ItemClassification.progression),
-    "Launch Pad Level 2":        ItemData(BASE_ID + 202, ItemClassification.progression),
-    "Astronaut Complex Level 2": ItemData(BASE_ID + 203, ItemClassification.progression),
-}
+# KSC building upgrades are location checks only - not items in the pool.
+KSC_UPGRADE_ITEMS: dict[str, ItemData] = {}
 
 # Filler items: in-game currency/resource bonuses.
 FILLER_ITEMS: dict[str, ItemData] = {

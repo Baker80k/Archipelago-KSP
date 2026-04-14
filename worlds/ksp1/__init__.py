@@ -40,7 +40,7 @@ from typing import Any
 
 from .Items import (
     KSPItem, ALL_ITEMS, PART_BUNDLE_ITEMS, SOI_PERMIT_ITEMS,
-    KSC_UPGRADE_ITEMS, FILLER_ITEMS,
+    FILLER_ITEMS,
     item_name_to_id, GAME_NAME,
 )
 from .Locations import (
@@ -89,20 +89,9 @@ class KSPWorld(World):
         )
 
         # ----- Access rule helpers -----
-        def has_flag_infra(state) -> bool:
-            """Prerequisites to plant a flag on any non-Kerbin body."""
-            return (
-                state.has("VAB Level 2",               p) and
-                state.has("Launch Pad Level 2",        p) and
-                state.has("Astronaut Complex Level 2", p)
-            )
-
         def can_reach_beyond_kerbin(state) -> bool:
-            """Tracking station + access to at least one Kerbin-system moon."""
-            return (
-                state.has("Tracking Station Level 2", p) and
-                (state.has("Mun Permit", p) or state.has("Minmus Permit", p))
-            )
+            """Access to at least one Kerbin-system moon."""
+            return state.has("Mun Permit", p) or state.has("Minmus Permit", p)
 
         # ----- Helper: build a region with one flag location -----
         def flag_region(name: str, flag_extra_rule=None) -> Region:
@@ -115,26 +104,19 @@ class KSPWorld(World):
             return r
 
         # ----- Mun -----
-        mun = flag_region("Mun", lambda state: has_flag_infra(state))
+        mun = flag_region("Mun")
         e = menu.create_exit("To Mun")
-        e.access_rule = lambda state: (
-            state.has("Mun Permit", p) and
-            state.has("Tracking Station Level 2", p)
-        )
+        e.access_rule = lambda state: state.has("Mun Permit", p)
         e.connect(mun)
 
         # ----- Minmus -----
-        minmus = flag_region("Minmus", lambda state: has_flag_infra(state))
+        minmus = flag_region("Minmus")
         e = menu.create_exit("To Minmus")
-        e.access_rule = lambda state: (
-            state.has("Minmus Permit", p) and
-            state.has("Tracking Station Level 2", p)
-        )
+        e.access_rule = lambda state: state.has("Minmus Permit", p)
         e.connect(minmus)
 
         # ----- Outer solar system helpers -----
-        # All outer bodies require TS L2 + (Mun or Minmus Permit) to reach.
-        # Flags on all outer bodies additionally require flag infrastructure.
+        # All outer bodies require (Mun or Minmus Permit) + their own SOI permit.
 
         def outer_entry(permit: str):
             """Entry rule from Menu to an outer-system body."""
@@ -147,40 +129,36 @@ class KSPWorld(World):
             """Entry rule from a parent-body region to one of its moons."""
             return lambda state, _permit=permit: state.has(_permit, p)
 
-        def outer_flag_infra(state) -> bool:
-            """Flag plant on any outer body needs both flag infra and outer access."""
-            return has_flag_infra(state) and can_reach_beyond_kerbin(state)
-
         # ----- Moho -----
-        moho = flag_region("Moho", outer_flag_infra)
+        moho = flag_region("Moho")
         e = menu.create_exit("To Moho")
         e.access_rule = outer_entry("Moho Permit")
         e.connect(moho)
 
         # ----- Eve system -----
-        eve = flag_region("Eve", outer_flag_infra)
+        eve = flag_region("Eve")
         e = menu.create_exit("To Eve")
         e.access_rule = outer_entry("Eve Permit")
         e.connect(eve)
 
-        gilly = flag_region("Gilly", outer_flag_infra)
+        gilly = flag_region("Gilly")
         e = eve.create_exit("To Gilly")
         e.access_rule = moon_entry("Gilly Permit")
         e.connect(gilly)
 
         # ----- Duna system -----
-        duna = flag_region("Duna", outer_flag_infra)
+        duna = flag_region("Duna")
         e = menu.create_exit("To Duna")
         e.access_rule = outer_entry("Duna Permit")
         e.connect(duna)
 
-        ike = flag_region("Ike", outer_flag_infra)
+        ike = flag_region("Ike")
         e = duna.create_exit("To Ike")
         e.access_rule = moon_entry("Ike Permit")
         e.connect(ike)
 
         # ----- Dres -----
-        dres = flag_region("Dres", outer_flag_infra)
+        dres = flag_region("Dres")
         e = menu.create_exit("To Dres")
         e.access_rule = outer_entry("Dres Permit")
         e.connect(dres)
@@ -198,13 +176,13 @@ class KSPWorld(World):
             ("Bop",    "Bop Permit"),
             ("Pol",    "Pol Permit"),
         ]:
-            moon_r = flag_region(moon_name, outer_flag_infra)
+            moon_r = flag_region(moon_name)
             e = jool.create_exit(f"To {moon_name}")
             e.access_rule = moon_entry(moon_permit)
             e.connect(moon_r)
 
         # ----- Eeloo -----
-        eeloo = flag_region("Eeloo", outer_flag_infra)
+        eeloo = flag_region("Eeloo")
         e = menu.create_exit("To Eeloo")
         e.access_rule = outer_entry("Eeloo Permit")
         e.connect(eeloo)
@@ -226,7 +204,7 @@ class KSPWorld(World):
     def create_items(self) -> None:
         pool = [
             self.create_item(name)
-            for name in {**PART_BUNDLE_ITEMS, **SOI_PERMIT_ITEMS, **KSC_UPGRADE_ITEMS}
+            for name in {**PART_BUNDLE_ITEMS, **SOI_PERMIT_ITEMS}
         ]
 
         filler_names = list(FILLER_ITEMS.keys())
