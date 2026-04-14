@@ -294,6 +294,37 @@ class KSPWorld(World):
         data = ALL_ITEMS[name]
         return KSPItem(name, data.classification, data.id, self.player)
 
+    # Manned command pods (no probe cores; no _v2/_v3 variants).
+    # AvailablePart.name values from KSP's part database.
+    _STARTING_PODS = [
+        "Mark1Cockpit",       # Mk1 Cockpit
+        "Mark2Cockpit",       # Mk1 Inline Cockpit
+        "mk2Cockpit_Standard",# Mk2 Standard Cockpit
+        "mk2Cockpit_Inline",  # Mk2 Inline Cockpit
+        "mk1pod_v2",          # Mk1 Command Pod (only version; original deprecated)
+        "mk1-3pod",           # Mk1-3 Command Pod
+        "landerCabinSmall",   # Mk1 Lander Can
+        "mk2LanderCabin",     # Mk2 Lander Can
+        "cupola",             # Cupola Module
+    ]
+
+    # Full parachutes only (no drogue chutes; no _v2/_v3 variants).
+    _STARTING_CHUTES = [
+        "parachuteSingle",    # Mk1 Parachute
+        "parachuteRadial",    # Mk2-R Radial Parachute
+        "parachuteLarge",     # Mk16-XL Parachute
+    ]
+
+    # Solid-fuel boosters (no Sepratron, no LES; no _v2/_v3 variants).
+    _STARTING_SRBS = [
+        "Mite",               # FM1 "Mite" Solid Fuel Booster
+        "Shrimp",             # F3S0 "Shrimp" Solid Fuel Booster
+        "solidBooster1-1",    # BACC "Thumper" Solid Fuel Booster
+        "MassiveBooster",     # S1 SRB-KD25k "Kickback" Solid Fuel Booster
+        "Thoroughbred",       # S2-17 "Thoroughbred" Solid Fuel Booster
+        "Clydesdale",         # S2-33 "Clydesdale" Solid Fuel Booster
+    ]
+
     # Terrestrial-compatible science experiments granted at game start.
     # Excludes: infrared telescope and magnetometer boom (space-only),
     # and materials study (Science Jr.) which makes the start too easy.
@@ -313,8 +344,6 @@ class KSPWorld(World):
         The C# plugin also has these hardcoded; slot_data is a cross-check / future
         extension point.
         """
-        seed = self.random.randint(0, 2 ** 31 - 1)
-        experiment = self.random.choice(self._STARTING_EXPERIMENTS)
         return {
             "tech_id_to_location_id":   tech_id_to_location_id,
             "facility_to_location_id":  facility_to_location_id,
@@ -324,12 +353,11 @@ class KSPWorld(World):
                 for name, data in PART_BUNDLE_ITEMS.items()
                 if data.tech_id is not None
             },
-            # Seed used by the C# plugin to deterministically pick one command
-            # pod, one parachute, and one SRB from KSP's full part list.
-            # Consistent per AP seed so all players/restarts get the same selection.
-            "starting_seed": seed,
-            # KSP ModuleScienceExperiment.experimentID for the one starting science
-            # part. The C# plugin finds the matching AvailablePart and adds it to
-            # the always-visible starting set alongside the pod/chute/SRB.
-            "starting_experiment": experiment,
+            # AvailablePart.name for the three always-available starting parts.
+            # The C# plugin looks each up by name in PartLoader and makes it visible.
+            "starting_pod":        self.random.choice(self._STARTING_PODS),
+            "starting_chute":      self.random.choice(self._STARTING_CHUTES),
+            "starting_srb":        self.random.choice(self._STARTING_SRBS),
+            # KSP ModuleScienceExperiment.experimentID for the starting science part.
+            "starting_experiment": self.random.choice(self._STARTING_EXPERIMENTS),
         }

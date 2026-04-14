@@ -80,7 +80,9 @@ class KSPContext(CommonContext):
         super().__init__(server_address, password)
         # Slot data populated on Connected packet
         self.part_bundle_to_tech_id: dict = {}
-        self.starting_seed: int = -1
+        self.starting_pod:   str = ""
+        self.starting_chute: str = ""
+        self.starting_srb:   str = ""
         self.starting_experiment: str = ""
 
     async def server_auth(self, password_requested: bool = False) -> None:
@@ -93,7 +95,9 @@ class KSPContext(CommonContext):
         if cmd == "Connected":
             sd = args.get("slot_data", {})
             self.part_bundle_to_tech_id = sd.get("part_bundle_to_tech_id", {})
-            self.starting_seed = sd.get("starting_seed", -1)
+            self.starting_pod   = sd.get("starting_pod",   "")
+            self.starting_chute = sd.get("starting_chute", "")
+            self.starting_srb   = sd.get("starting_srb",   "")
             self.starting_experiment = sd.get("starting_experiment", "")
             logger.info("[APKSP] Slot data received.")
 
@@ -115,7 +119,9 @@ class KSPContext(CommonContext):
             "connected": connected,
             "slot": self.auth or "",
             "game": self.game,
-            "starting_seed": self.starting_seed,
+            "starting_pod":        self.starting_pod,
+            "starting_chute":      self.starting_chute,
+            "starting_srb":        self.starting_srb,
             "starting_experiment": self.starting_experiment,
         }
 
