@@ -1,8 +1,8 @@
 from BaseClasses import Item, ItemClassification
 from typing import NamedTuple
 
-GAME_NAME = "Kerbal Space Program"
-BASE_ID = 7771000
+GAME_NAME = "Kerbal Space Program 1.12"
+BASE_ID = 1969000
 
 
 class ItemData(NamedTuple):
