@@ -1,7 +1,7 @@
 from BaseClasses import Location
 from typing import NamedTuple
 
-GAME_NAME = "Kerbal Space Program 1.12"
+GAME_NAME = "Kerbal Space Program"
 BASE_ID       = 1969000
 TECH_LOC_BASE = BASE_ID + 1000   # 1970000
 KSC_LOC_BASE  = BASE_ID + 2000   # 1971000
