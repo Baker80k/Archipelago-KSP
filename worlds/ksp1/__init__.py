@@ -18,14 +18,16 @@ Items
   - Tracking Station Level 2: required to reach any body beyond Kerbin.
   - VAB Level 2, Launch Pad Level 2, Astronaut Complex Level 2: required to plant
     a flag on any body beyond Kerbin.
-- Filler items: Funds/Science/Reputation boosts.
+- Filler items: Funds/Reputation boosts.
 
 Starting inventory
 ------------------
-The player starts with one randomly-selected command pod, parachute, and SRB chosen
-from ALL KSP parts (any tech node). Selection is deterministic per AP seed. Those
-three parts are always buildable; all other parts in those tech nodes are hidden until
-the corresponding AP bundle is received.
+The player starts with one randomly-selected command pod, parachute, SRB, and one
+terrestrial-compatible science experiment (mystery goo, thermometer, barometer,
+seismic accelerometer, atmospheric analyzer, or gravity detector), all chosen from
+ALL KSP parts (any tech node). Selection is deterministic per AP seed. Those parts
+are always buildable; all other parts in those tech nodes are hidden until the
+corresponding AP bundle is received.
 
 Win condition (default: 'full')
 -------------------------------
@@ -57,7 +59,7 @@ class KSPWebWorld(WebWorld):
         "English",
         "setup_en.md",
         "setup/en",
-        ["ZanderKeith"],
+        ["Baker80k"],
     )
     tutorials = [setup_en]
 
@@ -292,6 +294,18 @@ class KSPWorld(World):
         data = ALL_ITEMS[name]
         return KSPItem(name, data.classification, data.id, self.player)
 
+    # Terrestrial-compatible science experiments granted at game start.
+    # Excludes: infrared telescope and magnetometer boom (space-only),
+    # and materials study (Science Jr.) which makes the start too easy.
+    _STARTING_EXPERIMENTS = [
+        "mysteryGoo",        # Mystery Goo Containment Unit
+        "temperatureScan",   # 2HOT Thermometer
+        "barometerScan",     # PresMat Barometer
+        "seismicScan",       # Seismic Accelerometer
+        "atmosphereAnalysis",# SCAN Atmospheric Analyzer
+        "gravityScan",       # GRAVMAX Negative Gravioli Detector
+    ]
+
     def fill_slot_data(self) -> dict[str, Any]:
         """
         Passed to the client on connection. Gives the C# plugin the ID tables it needs
@@ -299,6 +313,8 @@ class KSPWorld(World):
         The C# plugin also has these hardcoded; slot_data is a cross-check / future
         extension point.
         """
+        seed = self.random.randint(0, 2 ** 31 - 1)
+        experiment = self.random.choice(self._STARTING_EXPERIMENTS)
         return {
             "tech_id_to_location_id":   tech_id_to_location_id,
             "facility_to_location_id":  facility_to_location_id,
@@ -309,7 +325,11 @@ class KSPWorld(World):
                 if data.tech_id is not None
             },
             # Seed used by the C# plugin to deterministically pick one command
-            # pod, one parachute, and one SRB from KSP's 'start' tech node.
+            # pod, one parachute, and one SRB from KSP's full part list.
             # Consistent per AP seed so all players/restarts get the same selection.
-            "starting_seed": self.random.randint(0, 2 ** 31 - 1),
+            "starting_seed": seed,
+            # KSP ModuleScienceExperiment.experimentID for the one starting science
+            # part. The C# plugin finds the matching AvailablePart and adds it to
+            # the always-visible starting set alongside the pod/chute/SRB.
+            "starting_experiment": experiment,
         }

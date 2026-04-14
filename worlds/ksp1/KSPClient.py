@@ -33,9 +33,9 @@ import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Optional
 
-# Allow running from ksp_attempt/ root: add Archipelago/ to path
+# Add Archipelago-KSP/ to path so CommonClient etc. are importable
 _this_dir = os.path.dirname(os.path.abspath(__file__))
-_archipelago_dir = os.path.join(os.path.dirname(_this_dir), "Archipelago")
+_archipelago_dir = os.path.join(os.path.dirname(_this_dir), "Archipelago-KSP")
 if os.path.isdir(_archipelago_dir) and _archipelago_dir not in sys.path:
     sys.path.insert(0, _archipelago_dir)
 
@@ -81,6 +81,7 @@ class KSPContext(CommonContext):
         # Slot data populated on Connected packet
         self.part_bundle_to_tech_id: dict = {}
         self.starting_seed: int = -1
+        self.starting_experiment: str = ""
 
     async def server_auth(self, password_requested: bool = False) -> None:
         if password_requested and not self.password:
@@ -93,6 +94,7 @@ class KSPContext(CommonContext):
             sd = args.get("slot_data", {})
             self.part_bundle_to_tech_id = sd.get("part_bundle_to_tech_id", {})
             self.starting_seed = sd.get("starting_seed", -1)
+            self.starting_experiment = sd.get("starting_experiment", "")
             logger.info("[APKSP] Slot data received.")
 
     # ------------------------------------------------------------------
@@ -114,6 +116,7 @@ class KSPContext(CommonContext):
             "slot": self.auth or "",
             "game": self.game,
             "starting_seed": self.starting_seed,
+            "starting_experiment": self.starting_experiment,
         }
 
 

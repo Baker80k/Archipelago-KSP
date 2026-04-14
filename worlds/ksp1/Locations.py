@@ -1,11 +1,11 @@
 from BaseClasses import Location
 from typing import NamedTuple
 
-GAME_NAME = "Kerbal Space Program"
-BASE_ID       = 7771000
-TECH_LOC_BASE = BASE_ID + 1000   # 7772000
-KSC_LOC_BASE  = BASE_ID + 2000   # 7773000
-FLAG_LOC_BASE = BASE_ID + 3000   # 7774000
+GAME_NAME = "Kerbal Space Program 1.12"
+BASE_ID       = 1969000
+TECH_LOC_BASE = BASE_ID + 1000   # 1970000
+KSC_LOC_BASE  = BASE_ID + 2000   # 1971000
+FLAG_LOC_BASE = BASE_ID + 3000   # 1972000
 
 
 class LocationData(NamedTuple):

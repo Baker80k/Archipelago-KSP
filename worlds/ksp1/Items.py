@@ -135,8 +135,7 @@ KSC_UPGRADE_ITEMS: dict[str, ItemData] = {
 # Filler items: in-game currency/resource bonuses.
 FILLER_ITEMS: dict[str, ItemData] = {
     "Funds Boost":      ItemData(BASE_ID + 150, ItemClassification.filler),
-    "Science Boost":    ItemData(BASE_ID + 151, ItemClassification.filler),
-    "Reputation Boost": ItemData(BASE_ID + 152, ItemClassification.filler),
+    "Reputation Boost": ItemData(BASE_ID + 151, ItemClassification.filler),
 }
 
 ALL_ITEMS: dict[str, ItemData] = {
