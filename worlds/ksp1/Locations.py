@@ -17,20 +17,24 @@ class LocationData(NamedTuple):
     ksp_key: str
 
 
-# Tech tree node locations - one per researchable node (62 total).
-# Order and IDs match PART_BUNDLE_ITEMS in Items.py exactly.
-TECH_LOCATIONS: dict[str, LocationData] = {
-    # --- Tier 2 ---
+# --- Tier 2 ---
+TECH_TIER_2: dict[str, LocationData] = {
     "Tech: Basic Rocketry":               LocationData(TECH_LOC_BASE +  0, "basicRocketry"),
     "Tech: Engineering 101":              LocationData(TECH_LOC_BASE +  1, "engineering101"),
-    # --- Tier 3 ---
+}
+
+# --- Tier 3 ---
+TECH_TIER_3: dict[str, LocationData] = {
     "Tech: Survivability":                LocationData(TECH_LOC_BASE +  2, "survivability"),
     "Tech: Stability":                    LocationData(TECH_LOC_BASE +  3, "stability"),
     "Tech: General Rocketry":             LocationData(TECH_LOC_BASE +  4, "generalRocketry"),
+}
+
+# --- Tier 4 ---, everything beyond this I don't really care about
+TECH_TIER_4: dict[str, LocationData] = {
     "Tech: Aviation":                     LocationData(TECH_LOC_BASE +  5, "aviation"),
     "Tech: Basic Science":                LocationData(TECH_LOC_BASE +  6, "basicScience"),
     "Tech: Flight Control":               LocationData(TECH_LOC_BASE +  7, "flightControl"),
-    # --- Tier 4 ---
     "Tech: Advanced Rocketry":            LocationData(TECH_LOC_BASE +  8, "advRocketry"),
     "Tech: General Construction":         LocationData(TECH_LOC_BASE +  9, "generalConstruction"),
     "Tech: Propulsion Systems":           LocationData(TECH_LOC_BASE + 10, "propulsionSystems"),
@@ -39,7 +43,10 @@ TECH_LOCATIONS: dict[str, LocationData] = {
     "Tech: Landing":                      LocationData(TECH_LOC_BASE + 13, "landing"),
     "Tech: Aerodynamics":                 LocationData(TECH_LOC_BASE + 14, "aerodynamicSystems"),
     "Tech: Electrics":                    LocationData(TECH_LOC_BASE + 15, "electrics"),
-    # --- Tier 5 ---
+}
+
+# --- Tier 5 ---
+TECH_TIER_5: dict[str, LocationData] = {
     "Tech: Heavy Rocketry":               LocationData(TECH_LOC_BASE + 16, "heavyRocketry"),
     "Tech: Fuel Systems":                 LocationData(TECH_LOC_BASE + 17, "fuelSystems"),
     "Tech: Advanced Construction":        LocationData(TECH_LOC_BASE + 18, "advConstruction"),
@@ -51,7 +58,10 @@ TECH_LOCATIONS: dict[str, LocationData] = {
     "Tech: Advanced Exploration":         LocationData(TECH_LOC_BASE + 24, "advExploration"),
     "Tech: Specialized Control":          LocationData(TECH_LOC_BASE + 25, "specializedControl"),
     "Tech: Advanced Landing":             LocationData(TECH_LOC_BASE + 26, "advLanding"),
-    # --- Tier 6 ---
+}
+
+# --- Tier 6 ---
+TECH_TIER_6: dict[str, LocationData] = {
     "Tech: Supersonic Flight":            LocationData(TECH_LOC_BASE + 27, "supersonicFlight"),
     "Tech: Adv. Fuel Systems":            LocationData(TECH_LOC_BASE + 28, "advFuelSystems"),
     "Tech: Advanced Electrics":           LocationData(TECH_LOC_BASE + 29, "advElectrics"),
@@ -61,7 +71,10 @@ TECH_LOCATIONS: dict[str, LocationData] = {
     "Tech: Heavy Landing":                LocationData(TECH_LOC_BASE + 33, "heavyLanding"),
     "Tech: Scanning Tech":                LocationData(TECH_LOC_BASE + 34, "scienceTech"),
     "Tech: Unmanned Tech":                LocationData(TECH_LOC_BASE + 35, "unmannedTech"),
-    # --- Tier 7 ---
+}
+
+# --- Tier 7 ---
+TECH_TIER_7: dict[str, LocationData] = {
     "Tech: Nuclear Propulsion":           LocationData(TECH_LOC_BASE + 36, "nuclearPropulsion"),
     "Tech: Advanced MetalWorks":          LocationData(TECH_LOC_BASE + 37, "advMetalworks"),
     "Tech: Field Science":                LocationData(TECH_LOC_BASE + 38, "fieldScience"),
@@ -73,7 +86,10 @@ TECH_LOCATIONS: dict[str, LocationData] = {
     "Tech: Heavy Aerodynamics":           LocationData(TECH_LOC_BASE + 44, "heavyAerodynamics"),
     "Tech: Ion Propulsion":               LocationData(TECH_LOC_BASE + 45, "ionPropulsion"),
     "Tech: Hypersonic Flight":            LocationData(TECH_LOC_BASE + 46, "hypersonicFlight"),
-    # --- Tier 8 ---
+}
+
+# --- Tier 8 ---
+TECH_TIER_8: dict[str, LocationData] = {
     "Tech: Nanolathing":                  LocationData(TECH_LOC_BASE + 47, "nanolathing"),
     "Tech: Advanced Unmanned Tech":       LocationData(TECH_LOC_BASE + 48, "advUnmanned"),
     "Tech: Meta-Materials":               LocationData(TECH_LOC_BASE + 49, "metaMaterials"),
@@ -83,36 +99,65 @@ TECH_LOCATIONS: dict[str, LocationData] = {
     "Tech: Specialized Electrics":        LocationData(TECH_LOC_BASE + 53, "specializedElectrics"),
     "Tech: High-Performance Fuel Systems":LocationData(TECH_LOC_BASE + 54, "highPerformanceFuelSystems"),
     "Tech: Experimental Aerodynamics":    LocationData(TECH_LOC_BASE + 55, "experimentalAerodynamics"),
-    # --- Tier 9 ---
+}
+
+# --- Tier 9 ---
+TECH_TIER_9: dict[str, LocationData] = {
     "Tech: Automation":                   LocationData(TECH_LOC_BASE + 56, "automation"),
     "Tech: Aerospace Tech":               LocationData(TECH_LOC_BASE + 57, "aerospaceTech"),
     "Tech: Large Probes":                 LocationData(TECH_LOC_BASE + 58, "largeUnmanned"),
-    # --- Tier 10 ---
+}
+
+# --- Tier 10 ---
+TECH_TIER_10: dict[str, LocationData] = {
     "Tech: Experimental Science":         LocationData(TECH_LOC_BASE + 59, "experimentalScience"),
     "Tech: Experimental Motors":          LocationData(TECH_LOC_BASE + 60, "experimentalMotors"),
     "Tech: Experimental Electrics":       LocationData(TECH_LOC_BASE + 61, "experimentalElectrics"),
 }
 
-# KSC building upgrade locations (unchanged).
-KSC_UPGRADE_LOCATIONS: dict[str, LocationData] = {
-    "KSC: VAB Level 2":               LocationData(KSC_LOC_BASE + 0,  "SpaceCenter/VehicleAssemblyBuilding:1"),
-    "KSC: VAB Level 3":               LocationData(KSC_LOC_BASE + 1,  "SpaceCenter/VehicleAssemblyBuilding:2"),
-    "KSC: SPH Level 2":               LocationData(KSC_LOC_BASE + 2,  "SpaceCenter/SpacePlaneHangar:1"),
-    "KSC: SPH Level 3":               LocationData(KSC_LOC_BASE + 3,  "SpaceCenter/SpacePlaneHangar:2"),
-    "KSC: Research Lab Level 2":      LocationData(KSC_LOC_BASE + 4,  "SpaceCenter/ResearchAndDevelopment:1"),
-    "KSC: Research Lab Level 3":      LocationData(KSC_LOC_BASE + 5,  "SpaceCenter/ResearchAndDevelopment:2"),
-    "KSC: Mission Control Level 2":   LocationData(KSC_LOC_BASE + 6,  "SpaceCenter/MissionControl:1"),
-    "KSC: Mission Control Level 3":   LocationData(KSC_LOC_BASE + 7,  "SpaceCenter/MissionControl:2"),
-    "KSC: Tracking Station Level 2":  LocationData(KSC_LOC_BASE + 8,  "SpaceCenter/TrackingStation:1"),
-    "KSC: Tracking Station Level 3":  LocationData(KSC_LOC_BASE + 9,  "SpaceCenter/TrackingStation:2"),
+# Tech tree node locations - one per researchable node (62 total, tiers 2-10).
+TECH_LOCATIONS: dict[str, LocationData] = {
+    **TECH_TIER_2,
+    **TECH_TIER_3,
+    **TECH_TIER_4,
+    **TECH_TIER_5,
+    **TECH_TIER_6,
+    **TECH_TIER_7,
+    **TECH_TIER_8,
+    **TECH_TIER_9,
+    **TECH_TIER_10,
+}
+
+# --- KSC Level 2 upgrades ---
+KSC_LEVEL_2: dict[str, LocationData] = {
+    "KSC: VAB Level 2":               LocationData(KSC_LOC_BASE +  0, "SpaceCenter/VehicleAssemblyBuilding:1"),
+    "KSC: SPH Level 2":               LocationData(KSC_LOC_BASE +  2, "SpaceCenter/SpacePlaneHangar:1"),
+    "KSC: Research Lab Level 2":      LocationData(KSC_LOC_BASE +  4, "SpaceCenter/ResearchAndDevelopment:1"),
+    "KSC: Mission Control Level 2":   LocationData(KSC_LOC_BASE +  6, "SpaceCenter/MissionControl:1"),
+    "KSC: Tracking Station Level 2":  LocationData(KSC_LOC_BASE +  8, "SpaceCenter/TrackingStation:1"),
     "KSC: Astronaut Complex Level 2": LocationData(KSC_LOC_BASE + 10, "SpaceCenter/AstronautComplex:1"),
-    "KSC: Astronaut Complex Level 3": LocationData(KSC_LOC_BASE + 11, "SpaceCenter/AstronautComplex:2"),
     "KSC: Launch Pad Level 2":        LocationData(KSC_LOC_BASE + 12, "SpaceCenter/LaunchPad:1"),
-    "KSC: Launch Pad Level 3":        LocationData(KSC_LOC_BASE + 13, "SpaceCenter/LaunchPad:2"),
     "KSC: Runway Level 2":            LocationData(KSC_LOC_BASE + 14, "SpaceCenter/Runway:1"),
-    "KSC: Runway Level 3":            LocationData(KSC_LOC_BASE + 15, "SpaceCenter/Runway:2"),
     "KSC: Administration Level 2":    LocationData(KSC_LOC_BASE + 16, "SpaceCenter/Administration:1"),
+}
+
+# --- KSC Level 3 upgrades ---
+KSC_LEVEL_3: dict[str, LocationData] = {
+    "KSC: VAB Level 3":               LocationData(KSC_LOC_BASE +  1, "SpaceCenter/VehicleAssemblyBuilding:2"),
+    "KSC: SPH Level 3":               LocationData(KSC_LOC_BASE +  3, "SpaceCenter/SpacePlaneHangar:2"),
+    "KSC: Research Lab Level 3":      LocationData(KSC_LOC_BASE +  5, "SpaceCenter/ResearchAndDevelopment:2"),
+    "KSC: Mission Control Level 3":   LocationData(KSC_LOC_BASE +  7, "SpaceCenter/MissionControl:2"),
+    "KSC: Tracking Station Level 3":  LocationData(KSC_LOC_BASE +  9, "SpaceCenter/TrackingStation:2"),
+    "KSC: Astronaut Complex Level 3": LocationData(KSC_LOC_BASE + 11, "SpaceCenter/AstronautComplex:2"),
+    "KSC: Launch Pad Level 3":        LocationData(KSC_LOC_BASE + 13, "SpaceCenter/LaunchPad:2"),
+    "KSC: Runway Level 3":            LocationData(KSC_LOC_BASE + 15, "SpaceCenter/Runway:2"),
     "KSC: Administration Level 3":    LocationData(KSC_LOC_BASE + 17, "SpaceCenter/Administration:2"),
+}
+
+# KSC building upgrade locations - 9 buildings x 2 upgrades (18 total).
+KSC_UPGRADE_LOCATIONS: dict[str, LocationData] = {
+    **KSC_LEVEL_2,
+    **KSC_LEVEL_3,
 }
 
 FLAG_LOCATIONS: dict[str, LocationData] = {

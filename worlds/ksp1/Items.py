@@ -12,24 +12,29 @@ class ItemData(NamedTuple):
     tech_id: str | None = None
 
 
-# One part bundle per tech tree node (62 total - all researchable nodes).
-# Ordered to match TechTree.cfg tier order; IDs are BASE_ID + index.
-# Item name = "Parts: {in-game node title}"
-# tech_id  = KSP's RDTech.techID string
-PART_BUNDLE_ITEMS: dict[str, ItemData] = {
-    # --- Tier 1 (start node - cannot be researched; unlocked via AP item) ---
+# --- Tier 1 (start node - cannot be researched; unlocked via AP item) ---
+PART_BUNDLE_TIER_1: dict[str, ItemData] = {
     "Parts: Start":                          ItemData(BASE_ID + 62, ItemClassification.progression, "start"),
-    # --- Tier 2 ---
+}
+
+# --- Tier 2 ---
+PART_BUNDLE_TIER_2: dict[str, ItemData] = {
     "Parts: Basic Rocketry":               ItemData(BASE_ID +  0, ItemClassification.progression, "basicRocketry"),
     "Parts: Engineering 101":              ItemData(BASE_ID +  1, ItemClassification.progression, "engineering101"),
-    # --- Tier 3 ---
+}
+
+# --- Tier 3 ---
+PART_BUNDLE_TIER_3: dict[str, ItemData] = {
     "Parts: Survivability":                ItemData(BASE_ID +  2, ItemClassification.progression, "survivability"),
     "Parts: Stability":                    ItemData(BASE_ID +  3, ItemClassification.progression, "stability"),
     "Parts: General Rocketry":             ItemData(BASE_ID +  4, ItemClassification.progression, "generalRocketry"),
+}
+
+# --- Tier 4 ---
+PART_BUNDLE_TIER_4: dict[str, ItemData] = {
     "Parts: Aviation":                     ItemData(BASE_ID +  5, ItemClassification.progression, "aviation"),
     "Parts: Basic Science":                ItemData(BASE_ID +  6, ItemClassification.useful,      "basicScience"),
     "Parts: Flight Control":               ItemData(BASE_ID +  7, ItemClassification.progression, "flightControl"),
-    # --- Tier 4 ---
     "Parts: Advanced Rocketry":            ItemData(BASE_ID +  8, ItemClassification.progression, "advRocketry"),
     "Parts: General Construction":         ItemData(BASE_ID +  9, ItemClassification.progression, "generalConstruction"),
     "Parts: Propulsion Systems":           ItemData(BASE_ID + 10, ItemClassification.progression, "propulsionSystems"),
@@ -38,7 +43,10 @@ PART_BUNDLE_ITEMS: dict[str, ItemData] = {
     "Parts: Landing":                      ItemData(BASE_ID + 13, ItemClassification.progression, "landing"),
     "Parts: Aerodynamics":                 ItemData(BASE_ID + 14, ItemClassification.progression, "aerodynamicSystems"),
     "Parts: Electrics":                    ItemData(BASE_ID + 15, ItemClassification.progression, "electrics"),
-    # --- Tier 5 ---
+}
+
+# --- Tier 5 ---
+PART_BUNDLE_TIER_5: dict[str, ItemData] = {
     "Parts: Heavy Rocketry":               ItemData(BASE_ID + 16, ItemClassification.progression, "heavyRocketry"),
     "Parts: Fuel Systems":                 ItemData(BASE_ID + 17, ItemClassification.progression, "fuelSystems"),
     "Parts: Advanced Construction":        ItemData(BASE_ID + 18, ItemClassification.progression, "advConstruction"),
@@ -50,7 +58,10 @@ PART_BUNDLE_ITEMS: dict[str, ItemData] = {
     "Parts: Advanced Exploration":         ItemData(BASE_ID + 24, ItemClassification.useful,      "advExploration"),
     "Parts: Specialized Control":          ItemData(BASE_ID + 25, ItemClassification.progression, "specializedControl"),
     "Parts: Advanced Landing":             ItemData(BASE_ID + 26, ItemClassification.progression, "advLanding"),
-    # --- Tier 6 ---
+}
+
+# --- Tier 6 ---
+PART_BUNDLE_TIER_6: dict[str, ItemData] = {
     "Parts: Supersonic Flight":            ItemData(BASE_ID + 27, ItemClassification.progression, "supersonicFlight"),
     "Parts: Adv. Fuel Systems":            ItemData(BASE_ID + 28, ItemClassification.progression, "advFuelSystems"),
     "Parts: Advanced Electrics":           ItemData(BASE_ID + 29, ItemClassification.progression, "advElectrics"),
@@ -60,7 +71,10 @@ PART_BUNDLE_ITEMS: dict[str, ItemData] = {
     "Parts: Heavy Landing":                ItemData(BASE_ID + 33, ItemClassification.progression, "heavyLanding"),
     "Parts: Scanning Tech":                ItemData(BASE_ID + 34, ItemClassification.useful,      "scienceTech"),
     "Parts: Unmanned Tech":                ItemData(BASE_ID + 35, ItemClassification.progression, "unmannedTech"),
-    # --- Tier 7 ---
+}
+
+# --- Tier 7 ---
+PART_BUNDLE_TIER_7: dict[str, ItemData] = {
     "Parts: Nuclear Propulsion":           ItemData(BASE_ID + 36, ItemClassification.progression, "nuclearPropulsion"),
     "Parts: Advanced MetalWorks":          ItemData(BASE_ID + 37, ItemClassification.useful,      "advMetalworks"),
     "Parts: Field Science":                ItemData(BASE_ID + 38, ItemClassification.useful,      "fieldScience"),
@@ -72,7 +86,10 @@ PART_BUNDLE_ITEMS: dict[str, ItemData] = {
     "Parts: Heavy Aerodynamics":           ItemData(BASE_ID + 44, ItemClassification.progression, "heavyAerodynamics"),
     "Parts: Ion Propulsion":               ItemData(BASE_ID + 45, ItemClassification.useful,      "ionPropulsion"),
     "Parts: Hypersonic Flight":            ItemData(BASE_ID + 46, ItemClassification.progression, "hypersonicFlight"),
-    # --- Tier 8 ---
+}
+
+# --- Tier 8 ---
+PART_BUNDLE_TIER_8: dict[str, ItemData] = {
     "Parts: Nanolathing":                  ItemData(BASE_ID + 47, ItemClassification.useful,      "nanolathing"),
     "Parts: Advanced Unmanned Tech":       ItemData(BASE_ID + 48, ItemClassification.useful,      "advUnmanned"),
     "Parts: Meta-Materials":               ItemData(BASE_ID + 49, ItemClassification.useful,      "metaMaterials"),
@@ -84,14 +101,34 @@ PART_BUNDLE_ITEMS: dict[str, ItemData] = {
         BASE_ID + 54, ItemClassification.progression, "highPerformanceFuelSystems"
     ),
     "Parts: Experimental Aerodynamics":    ItemData(BASE_ID + 55, ItemClassification.useful,      "experimentalAerodynamics"),
-    # --- Tier 9 ---
+}
+
+# --- Tier 9 ---
+PART_BUNDLE_TIER_9: dict[str, ItemData] = {
     "Parts: Automation":                   ItemData(BASE_ID + 56, ItemClassification.useful,      "automation"),
     "Parts: Aerospace Tech":               ItemData(BASE_ID + 57, ItemClassification.useful,      "aerospaceTech"),
     "Parts: Large Probes":                 ItemData(BASE_ID + 58, ItemClassification.useful,      "largeUnmanned"),
-    # --- Tier 10 ---
+}
+
+# --- Tier 10 ---
+PART_BUNDLE_TIER_10: dict[str, ItemData] = {
     "Parts: Experimental Science":         ItemData(BASE_ID + 59, ItemClassification.useful,      "experimentalScience"),
     "Parts: Experimental Motors":          ItemData(BASE_ID + 60, ItemClassification.useful,      "experimentalMotors"),
     "Parts: Experimental Electrics":       ItemData(BASE_ID + 61, ItemClassification.useful,      "experimentalElectrics"),
+}
+
+# One part bundle per tech tree node (63 total, including the start node).
+PART_BUNDLE_ITEMS: dict[str, ItemData] = {
+    **PART_BUNDLE_TIER_1,
+    **PART_BUNDLE_TIER_2,
+    **PART_BUNDLE_TIER_3,
+    **PART_BUNDLE_TIER_4,
+    **PART_BUNDLE_TIER_5,
+    **PART_BUNDLE_TIER_6,
+    **PART_BUNDLE_TIER_7,
+    **PART_BUNDLE_TIER_8,
+    **PART_BUNDLE_TIER_9,
+    **PART_BUNDLE_TIER_10,
 }
 
 # SOI permits gate access to planetary bodies.
