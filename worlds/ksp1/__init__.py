@@ -44,7 +44,12 @@ from .Items import (
     item_name_to_id, GAME_NAME,
 )
 from .Locations import (
-    KSPLocation, ALL_LOCATIONS, TECH_LOCATIONS, KSC_UPGRADE_LOCATIONS, FLAG_LOCATIONS,
+    KSPLocation, ALL_LOCATIONS,
+    TECH_LOCATIONS, TECH_TIER_2, TECH_TIER_3,
+    TECH_TIER_4, TECH_TIER_5, TECH_TIER_6, TECH_TIER_7,
+    TECH_TIER_8, TECH_TIER_9, TECH_TIER_10,
+    KSC_UPGRADE_LOCATIONS, KSC_LEVEL_2, KSC_LEVEL_3,
+    FLAG_LOCATIONS,
     location_name_to_id,
     tech_id_to_location_id, facility_to_location_id, body_to_location_id,
 )
@@ -80,53 +85,96 @@ class KSPWorld(World):
     def create_regions(self) -> None:
         p = self.player
 
-        # ----- Menu region: tech tree, KSC upgrades, Kerbin flag -----
+        # ----- Part requirement helpers -----
+        # Bundles that provide liquid fuel tanks (needed to reach Mun/Minmus).
+        _FUEL_BUNDLES = (
+            "Parts: Basic Rocketry",
+            "Parts: General Rocketry",
+            "Parts: Advanced Rocketry",
+            "Parts: Fuel Systems",
+            "Parts: Adv. Fuel Systems",
+            "Parts: High Altitude Flight",
+            "Parts: Large Volume Containment",
+        )
+        # Bundles that provide a capable upper-stage engine.
+        _ENGINE_BUNDLES = (
+            "Parts: Basic Rocketry",
+            "Parts: General Rocketry",
+            "Parts: Heavy Rocketry",
+            "Parts: Heavier Rocketry",
+        )
+
+        def has_fuel(state) -> bool:
+            return any(state.has(b, p) for b in _FUEL_BUNDLES)
+
+        def has_engine(state) -> bool:
+            return any(state.has(b, p) for b in _ENGINE_BUNDLES)
+
+        def can_reach_mun_or_minmus(state) -> bool:
+            has_permit = state.has("Mun Permit", p) or state.has("Minmus Permit", p)
+            return has_permit and has_fuel(state) and has_engine(state)
+
+        # ----- Menu region: tier 2-3 tech, KSC level 2, Kerbin flag -----
         menu = Region("Menu", p, self.multiworld)
-        for name, loc_data in {**TECH_LOCATIONS, **KSC_UPGRADE_LOCATIONS}.items():
-            menu.locations.append(KSPLocation(p, name, loc_data.id, menu))
+        for name in {**TECH_TIER_2, **TECH_TIER_3}:
+            menu.locations.append(KSPLocation(p, name, TECH_LOCATIONS[name].id, menu))
+        for name in KSC_LEVEL_2:
+            menu.locations.append(KSPLocation(p, name, KSC_UPGRADE_LOCATIONS[name].id, menu))
         menu.locations.append(
             KSPLocation(p, "Flag: Kerbin", FLAG_LOCATIONS["Flag: Kerbin"].id, menu)
         )
 
-        # ----- Access rule helpers -----
-        def can_reach_beyond_kerbin(state) -> bool:
-            """Access to at least one Kerbin-system moon."""
-            return state.has("Mun Permit", p) or state.has("Minmus Permit", p)
+        # ----- Advanced region: tier 4+ tech, KSC level 3 -----
+        # Requires reaching Mun or Minmus (permit + engine + fuel).
+        advanced = Region("Advanced", p, self.multiworld)
+        for tier in (
+            TECH_TIER_4, TECH_TIER_5, TECH_TIER_6, TECH_TIER_7,
+            TECH_TIER_8, TECH_TIER_9, TECH_TIER_10,
+        ):
+            for name in tier:
+                advanced.locations.append(
+                    KSPLocation(p, name, TECH_LOCATIONS[name].id, advanced)
+                )
+        for name in KSC_LEVEL_3:
+            advanced.locations.append(
+                KSPLocation(p, name, KSC_UPGRADE_LOCATIONS[name].id, advanced)
+            )
+        e = menu.create_exit("To Advanced")
+        e.access_rule = can_reach_mun_or_minmus
+        e.connect(advanced)
 
         # ----- Helper: build a region with one flag location -----
-        def flag_region(name: str, flag_extra_rule=None) -> Region:
-            """Create a Region containing only 'Flag: <name>'."""
+        def flag_region(name: str) -> Region:
             r = Region(name, p, self.multiworld)
             loc = KSPLocation(p, f"Flag: {name}", FLAG_LOCATIONS[f"Flag: {name}"].id, r)
-            if flag_extra_rule is not None:
-                loc.access_rule = flag_extra_rule
             r.locations.append(loc)
             return r
 
         # ----- Mun -----
         mun = flag_region("Mun")
         e = menu.create_exit("To Mun")
-        e.access_rule = lambda state: state.has("Mun Permit", p)
+        e.access_rule = lambda state: (
+            state.has("Mun Permit", p) and has_fuel(state) and has_engine(state)
+        )
         e.connect(mun)
 
         # ----- Minmus -----
         minmus = flag_region("Minmus")
         e = menu.create_exit("To Minmus")
-        e.access_rule = lambda state: state.has("Minmus Permit", p)
+        e.access_rule = lambda state: (
+            state.has("Minmus Permit", p) and has_fuel(state) and has_engine(state)
+        )
         e.connect(minmus)
 
         # ----- Outer solar system helpers -----
-        # All outer bodies require (Mun or Minmus Permit) + their own SOI permit.
+        # All outer bodies require can_reach_mun_or_minmus + their own SOI permit.
 
         def outer_entry(permit: str):
-            """Entry rule from Menu to an outer-system body."""
             return lambda state, _permit=permit: (
-                can_reach_beyond_kerbin(state) and
-                state.has(_permit, p)
+                can_reach_mun_or_minmus(state) and state.has(_permit, p)
             )
 
         def moon_entry(permit: str):
-            """Entry rule from a parent-body region to one of its moons."""
             return lambda state, _permit=permit: state.has(_permit, p)
 
         # ----- Moho -----
@@ -189,7 +237,8 @@ class KSPWorld(World):
 
         # ----- Register all regions -----
         self.multiworld.regions += [
-            menu, mun, minmus,
+            menu, advanced,
+            mun, minmus,
             moho, eve, gilly,
             duna, ike,
             dres,
