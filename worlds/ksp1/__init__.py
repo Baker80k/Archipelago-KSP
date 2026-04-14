@@ -31,7 +31,7 @@ corresponding AP bundle is received.
 
 Win condition (default: 'full')
 -------------------------------
-All 9 KSC buildings at level 3 AND flags planted on Mun AND Minmus.
+All 9 KSC buildings at level 3 AND flags planted on all 15 solid-surface bodies.
 """
 
 from worlds.AutoWorld import WebWorld, World
@@ -218,9 +218,11 @@ class KSPWorld(World):
         use_full_goal = self.options.goal == 0
 
         def completion(state) -> bool:
-            if not state.can_reach("Flag: Mun", "Location", self.player):
-                return False
-            if not state.can_reach("Flag: Minmus", "Location", self.player):
+            all_flags = all(
+                state.can_reach(name, "Location", self.player)
+                for name in FLAG_LOCATIONS
+            )
+            if not all_flags:
                 return False
             if use_full_goal:
                 return all(

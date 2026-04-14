@@ -6,8 +6,8 @@ class Goal(Choice):
     """
     Win condition for the KSP Archipelago run.
 
-    full        - All KSC buildings upgraded to max level AND flags on Mun and Minmus.
-    flags_only  - Flags on Mun and Minmus only (no building requirement).
+    full        - All KSC buildings upgraded to max level AND flags on all 15 solid-surface bodies.
+    flags_only  - Flags on all 15 solid-surface bodies only (no building requirement).
     """
     display_name = "Goal"
     option_full       = 0
