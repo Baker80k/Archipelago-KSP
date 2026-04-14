@@ -295,14 +295,13 @@ class KSPWorld(World):
         "parachuteLarge",     # Mk16-XL Parachute
     ]
 
-    # Solid-fuel boosters (no Sepratron, no LES; no _v2/_v3 variants).
+    # Solid-fuel boosters (no Sepratron, no LES).
+    # Flea/Hammer use _v2 names; the originals (solidBooster, solidBooster1) are deprecated.
     _STARTING_SRBS = [
-        "Mite",               # FM1 "Mite" Solid Fuel Booster
-        "Shrimp",             # F3S0 "Shrimp" Solid Fuel Booster
+        "solidBooster_sm_v2", # RT-5 "Flea" Solid Fuel Booster
+        "solidBooster_v2",    # RT-10 "Hammer" Solid Fuel Booster
         "solidBooster1-1",    # BACC "Thumper" Solid Fuel Booster
         "MassiveBooster",     # S1 SRB-KD25k "Kickback" Solid Fuel Booster
-        "Thoroughbred",       # S2-17 "Thoroughbred" Solid Fuel Booster
-        "Clydesdale",         # S2-33 "Clydesdale" Solid Fuel Booster
     ]
 
     # Terrestrial-compatible science experiments granted at game start.
