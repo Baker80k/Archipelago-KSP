@@ -1,8 +1,10 @@
 # Kerbal Space Program
 
+Setup guide can be found [here](https://github.com/Baker80k/Archipelago-KSP/blob/main/worlds/ksp1/docs/setup_en.md)
+
 ## Where is the settings page for the game?
 
-Not implemented yet! Your player file is `ksp_template.yaml`, in the companion repo 
+Not implemented yet! Your player file is `ksp_template.yaml`, in the [companion repo](https://github.com/Baker80k/KSP1-Random).
 
 ## What does randomization do to this game?
 

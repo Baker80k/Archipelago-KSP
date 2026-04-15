@@ -23,21 +23,25 @@ mkdir player_files
 ```
 
 The resulting file structure should look like this:
-ap_ksp
-- Archipelago-KSP
-- KSP1-Random
-- player_files
+```
+ap_ksp/
+├── Archipelago-KSP/
+├── KSP1-Random/
+└── player_files/
+```
 
 ### 2. Install the KSP Mod
 
 Move the file `KSP1-Random/ArchipelagoKSP.dll` in your KSP folder under `GameData/ArchipelagoKSP/Plugins`
 
 The resulting structure should look like this:
-Kerbal Space Program
-- GameData
-- - ArchipelagoKSP
-- - - Plugins
-- - - - ArchipelagoKSP.dll
+```
+Kerbal Space Program/
+└── GameData/
+    └── ArchipelagoKSP/
+        └── Plugins/
+            └── ArchipelagoKSP.dll
+```
 
 Restart KSP to load the mod.
 
@@ -55,6 +59,15 @@ cd KSP1-Random
 ### 4. Generate a Multiworld Game
 
 Copy `KSP1-Random/ksp_template.yaml` and place it in `player_files`, along with files from additional players.
+
+```
+ap_ksp/
+├── Archipelago-KSP/
+├── KSP1-Random/
+└── player_files/
+    ├── ksp_template.yaml
+    └── other_player.yaml
+```
 
 Edit the `ksp_template.yaml` to have the KSP player's name at the top.
 
@@ -85,7 +98,7 @@ This starts a local HTTP bridge on `127.0.0.1:52420` that relays between KSP and
 3. Enter the server address, slot name, and password.
 4. Click **Connect to Archipelago**.
 
-It may take ~5 seconds to connect, you'll know the connection is good once it says `Connected as: Name`
+It may take ~10 seconds to connect, you'll know the connection is good once it says `Connected as: Name`
 
 ## Final Notes
 
@@ -96,13 +109,6 @@ If you connect to the APClient once, you need to fully close the game for it to 
 If a connection issue happens, at any time you can click **Sync from AP** from the F8 menu to trigger a resync.
 
 Open KSP's in-game console with right shift + F12. On resync, there should be plenty of logs to see the present gamestate.
-
-## Options
-
-| Option | Description | Default |
-|---|---|---|
-| `goal` | Win condition: `full` (all KSC buildings max + all flags) or `flags_only` (flags only) | `full` |
-
 
 ## Troubleshooting
 
