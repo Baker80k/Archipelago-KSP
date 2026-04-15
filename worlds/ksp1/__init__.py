@@ -301,9 +301,9 @@ class KSPWorld(World):
     _STARTING_PODS = [
         "Mark1Cockpit",       # Mk1 Cockpit
         "Mark2Cockpit",       # Mk1 Inline Cockpit
-        "mk2Cockpit_Standard",# Mk2 Standard Cockpit
-        "mk2Cockpit_Inline",  # Mk2 Inline Cockpit
-        "mk1pod_v2",          # Mk1 Command Pod (only version; original deprecated)
+        "mk2Cockpit.Standard", # Mk2 Standard Cockpit
+        "mk2Cockpit.Inline",   # Mk2 Inline Cockpit
+        "mk1pod.v2",           # Mk1 Command Pod (only version; original deprecated)
         "mk1-3pod",           # Mk1-3 Command Pod
         "landerCabinSmall",   # Mk1 Lander Can
         "mk2LanderCabin",     # Mk2 Lander Can
@@ -318,10 +318,10 @@ class KSPWorld(World):
     ]
 
     # Solid-fuel boosters (no Sepratron, no LES).
-    # Flea/Hammer use _v2 names; the originals (solidBooster, solidBooster1) are deprecated.
+    # Flea/Hammer use .v2 names (dot notation); the originals (solidBooster, solidBooster1) are deprecated.
     _STARTING_SRBS = [
-        "solidBooster_sm_v2", # RT-5 "Flea" Solid Fuel Booster
-        "solidBooster_v2",    # RT-10 "Hammer" Solid Fuel Booster
+        "solidBooster.sm.v2", # RT-5 "Flea" Solid Fuel Booster
+        "solidBooster.v2",    # RT-10 "Hammer" Solid Fuel Booster
         "solidBooster1-1",    # BACC "Thumper" Solid Fuel Booster
         "MassiveBooster",     # S1 SRB-KD25k "Kickback" Solid Fuel Booster
     ]
