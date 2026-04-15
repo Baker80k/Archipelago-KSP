@@ -12,7 +12,7 @@ class LocationData(NamedTuple):
     id: int
     # KSP-internal key used to trigger this check:
     #   tech locations:    RDTech.techID  e.g. "basicRocketry"
-    #   KSC locations:     "facilityID:newLevel" (1-indexed post-upgrade)
+    #   KSC locations:     "facilityID:newLevel" (0-indexed new level: 1 = upgraded to L2, 2 = upgraded to L3)
     #   flag locations:    CelestialBody.name  e.g. "Mun"
     ksp_key: str
 
