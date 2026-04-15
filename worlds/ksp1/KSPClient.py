@@ -21,7 +21,7 @@ The C# plugin communicates with this client via:
     POST /check           -> body: {"location_id": int}
     POST /connect         -> body: {"server": str, "slot": str, "password": str}
 
-Start this client BEFORE launching KSP. Use F9 in-game to open the connection UI.
+Start this client BEFORE launching KSP. Use F8 in-game to open the connection UI.
 """
 
 import asyncio
@@ -249,7 +249,7 @@ if __name__ == "__main__":
 
     parser = get_base_parser(
         description="Kerbal Space Program Archipelago Client. "
-        "Run this before launching KSP, then use F9 in-game to connect."
+        "Run this before launching KSP, then use F8 in-game to connect."
     )
     parser.add_argument("--name", default=None, help="Slot name to connect as.")
     parser.add_argument("url", nargs="?", help="Archipelago connection URL.")

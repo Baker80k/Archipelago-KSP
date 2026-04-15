@@ -14,10 +14,6 @@ Items
   researchable node also unlocks it in R&D.
 - SOI permits (15): one per reachable body. Without a permit, entering that body's
   SOI instantly destroys the vessel.
-- KSC upgrade items (4): gate access to Mun/Minmus and beyond.
-  - Tracking Station Level 2: required to reach any body beyond Kerbin.
-  - VAB Level 2, Launch Pad Level 2, Astronaut Complex Level 2: required to plant
-    a flag on any body beyond Kerbin.
 - Filler items: Funds/Reputation boosts.
 
 Starting inventory
