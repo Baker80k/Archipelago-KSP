@@ -131,7 +131,7 @@ TECH_LOCATIONS: dict[str, LocationData] = {
 # --- KSC Level 2 upgrades ---
 KSC_LEVEL_2: dict[str, LocationData] = {
     "KSC: VAB Level 2":               LocationData(KSC_LOC_BASE +  0, "SpaceCenter/VehicleAssemblyBuilding:1"),
-    "KSC: SPH Level 2":               LocationData(KSC_LOC_BASE +  2, "SpaceCenter/SpacePlaneHangar:1"),
+    "KSC: SPH Level 2":               LocationData(KSC_LOC_BASE +  2, "SpaceCenter/SpaceplaneHangar:1"),
     "KSC: Research Lab Level 2":      LocationData(KSC_LOC_BASE +  4, "SpaceCenter/ResearchAndDevelopment:1"),
     "KSC: Mission Control Level 2":   LocationData(KSC_LOC_BASE +  6, "SpaceCenter/MissionControl:1"),
     "KSC: Tracking Station Level 2":  LocationData(KSC_LOC_BASE +  8, "SpaceCenter/TrackingStation:1"),
@@ -144,7 +144,7 @@ KSC_LEVEL_2: dict[str, LocationData] = {
 # --- KSC Level 3 upgrades ---
 KSC_LEVEL_3: dict[str, LocationData] = {
     "KSC: VAB Level 3":               LocationData(KSC_LOC_BASE +  1, "SpaceCenter/VehicleAssemblyBuilding:2"),
-    "KSC: SPH Level 3":               LocationData(KSC_LOC_BASE +  3, "SpaceCenter/SpacePlaneHangar:2"),
+    "KSC: SPH Level 3":               LocationData(KSC_LOC_BASE +  3, "SpaceCenter/SpaceplaneHangar:2"),
     "KSC: Research Lab Level 3":      LocationData(KSC_LOC_BASE +  5, "SpaceCenter/ResearchAndDevelopment:2"),
     "KSC: Mission Control Level 3":   LocationData(KSC_LOC_BASE +  7, "SpaceCenter/MissionControl:2"),
     "KSC: Tracking Station Level 3":  LocationData(KSC_LOC_BASE +  9, "SpaceCenter/TrackingStation:2"),
