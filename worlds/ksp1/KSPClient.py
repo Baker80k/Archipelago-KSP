@@ -8,7 +8,7 @@ Usage
 -----
 Run like so (args not necessary, can also connect from the in-game UI):
 
-    uv run KSPClient.py [--connect archipelago.gg:XXXXX] [--name SlotName] [--password YourPassword]
+    .venv/bin/python KSPClient.py [--connect archipelago.gg:XXXXX] [--name SlotName] [--password YourPassword]
 
 The C# plugin communicates with this client via:
     GET  /status          -> {"connected": bool, "slot": str}
@@ -28,10 +28,16 @@ import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Optional
 
-# Add Archipelago-KSP/ to path so CommonClient etc. are importable
+# Add Archipelago-KSP/ to path so CommonClient etc. are importable.
+# KSPClient.py lives at Archipelago-KSP/worlds/ksp1/ - go up two levels.
+# TODO(Baker80k) This is immensely stupid but I still don't totally understand
+# how to cleanly manage a .venv with Archipelago's setup
 _this_dir = os.path.dirname(os.path.abspath(__file__))
-_archipelago_dir = os.path.join(os.path.dirname(_this_dir), "Archipelago-KSP")
-if os.path.isdir(_archipelago_dir) and _archipelago_dir not in sys.path:
+_archipelago_dir = os.path.dirname(os.path.dirname(_this_dir))
+# Remove worlds/ksp1/ from path so it doesn't shadow Archipelago Options.py etc.
+if _this_dir in sys.path:
+    sys.path.remove(_this_dir)
+if _archipelago_dir not in sys.path:
     sys.path.insert(0, _archipelago_dir)
 
 from CommonClient import (
