@@ -2,16 +2,18 @@
 
 ## Where is the settings page for the game?
 
-The [player settings page for this game](../player-settings) contains all the options for configuring your experience.
+Not implemented yet! Your player file is `ksp_template.yaml`, in the companion repo 
 
 ## What does randomization do to this game?
 
 All ship parts and sphere-of-influence permits are removed from the game and shuffled into the multiworld item pool.
-The player starts with one randomly selected command pod, parachute, and solid rocket booster chosen from the full
+The player starts with one randomly selected command pod, parachute, solid rocket booster, and science experiment chosen from the full
 part catalog. All other parts must be received as items from the multiworld before they can be used in the VAB or SPH.
 
 Entering a celestial body's sphere of influence without the matching SOI permit causes the vessel to instantly explode,
 so the player must also receive permits to safely explore each body.
+
+Tech nodes still require Science to research, but researching a node checks that AP location. The node's parts are not available until the matching AP item is received.
 
 Locations are split across three categories:
 
