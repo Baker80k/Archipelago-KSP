@@ -117,9 +117,6 @@ class KSPWorld(World):
         menu = Region("Menu", p, self.multiworld)
         for name in {**TECH_TIER_2, **TECH_TIER_3}:
             menu.locations.append(KSPLocation(p, name, TECH_LOCATIONS[name].id, menu))
-        e = menu.create_exit("To Basic")
-        e.access_rule = can_reach_kerbin_orbits
-        e.connect(basic)
 
         # ----- Basic region: KSC level 2, Kerbin flag -----
         basic = Region("Basic", p, self.multiworld)
@@ -128,6 +125,9 @@ class KSPWorld(World):
         basic.locations.append(
             KSPLocation(p, "Flag: Kerbin", FLAG_LOCATIONS["Flag: Kerbin"].id, basic)
         )
+        e = menu.create_exit("To Basic")
+        e.access_rule = can_reach_kerbin_orbits
+        e.connect(basic)
         
 
         # ----- Advanced region: tier 4+ tech, KSC level 3 -----
