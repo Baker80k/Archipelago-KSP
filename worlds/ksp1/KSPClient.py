@@ -6,14 +6,9 @@ Archipelago multiworld server.
 
 Usage
 -----
-Run from the ksp_attempt/ directory:
+Run like so (args not necessary, can also connect from the in-game UI):
 
-    python -m apksp.KSPClient [--connect archipelago.gg:38281] [--name SlotName]
-
-Or from the Archipelago/ subdirectory:
-
-    cd Archipelago
-    python ../apksp/KSPClient.py [server:port] [--name SlotName]
+    uv run KSPClient.py [--connect archipelago.gg:XXXXX] [--name SlotName] [--password YourPassword]
 
 The C# plugin communicates with this client via:
     GET  /status          -> {"connected": bool, "slot": str}
@@ -252,7 +247,6 @@ if __name__ == "__main__":
         "Run this before launching KSP, then use F8 in-game to connect."
     )
     parser.add_argument("--name", default=None, help="Slot name to connect as.")
-    parser.add_argument("url", nargs="?", help="Archipelago connection URL.")
     args = parser.parse_args()
 
     colorama.just_fix_windows_console()
