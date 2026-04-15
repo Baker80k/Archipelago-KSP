@@ -105,20 +105,30 @@ class KSPWorld(World):
 
         def has_engine(state) -> bool:
             return any(state.has(b, p) for b in _ENGINE_BUNDLES)
+        
+        def can_reach_kerbin_orbits(state) -> bool:
+            return has_fuel(state) and has_engine(state)
 
         def can_reach_mun_or_minmus(state) -> bool:
             has_permit = state.has("Mun Permit", p) or state.has("Minmus Permit", p)
-            return has_permit and has_fuel(state) and has_engine(state)
+            return has_permit and can_reach_kerbin_orbits(state)
 
-        # ----- Menu region: tier 2-3 tech, KSC level 2, Kerbin flag -----
+        # ----- Menu region: tier 2-3 tech -----
         menu = Region("Menu", p, self.multiworld)
         for name in {**TECH_TIER_2, **TECH_TIER_3}:
             menu.locations.append(KSPLocation(p, name, TECH_LOCATIONS[name].id, menu))
+        e = menu.create_exit("To Basic")
+        e.access_rule = can_reach_kerbin_orbits
+        e.connect(basic)
+
+        # ----- Basic region: KSC level 2, Kerbin flag -----
+        basic = Region("Basic", p, self.multiworld)
         for name in KSC_LEVEL_2:
-            menu.locations.append(KSPLocation(p, name, KSC_UPGRADE_LOCATIONS[name].id, menu))
-        menu.locations.append(
-            KSPLocation(p, "Flag: Kerbin", FLAG_LOCATIONS["Flag: Kerbin"].id, menu)
+            basic.locations.append(KSPLocation(p, name, KSC_UPGRADE_LOCATIONS[name].id, basic))
+        basic.locations.append(
+            KSPLocation(p, "Flag: Kerbin", FLAG_LOCATIONS["Flag: Kerbin"].id, basic)
         )
+        
 
         # ----- Advanced region: tier 4+ tech, KSC level 3 -----
         # Requires reaching Mun or Minmus (permit + engine + fuel).
@@ -150,7 +160,7 @@ class KSPWorld(World):
         mun = flag_region("Mun")
         e = menu.create_exit("To Mun")
         e.access_rule = lambda state: (
-            state.has("Mun Permit", p) and has_fuel(state) and has_engine(state)
+            state.has("Mun Permit", p) and can_reach_kerbin_orbits(state)
         )
         e.connect(mun)
 
@@ -158,7 +168,7 @@ class KSPWorld(World):
         minmus = flag_region("Minmus")
         e = menu.create_exit("To Minmus")
         e.access_rule = lambda state: (
-            state.has("Minmus Permit", p) and has_fuel(state) and has_engine(state)
+            state.has("Minmus Permit", p) and can_reach_kerbin_orbits(state)
         )
         e.connect(minmus)
 
@@ -233,7 +243,7 @@ class KSPWorld(World):
 
         # ----- Register all regions -----
         self.multiworld.regions += [
-            menu, advanced,
+            menu, basic, advanced,
             mun, minmus,
             moho, eve, gilly,
             duna, ike,
@@ -278,39 +288,6 @@ class KSPWorld(World):
             return True
 
         self.multiworld.completion_condition[self.player] = completion
-
-    def generate_basic(self) -> None:
-        """Pre-place one rocketry bundle at an early tech location.
-
-        Guarantee: given ANY one of the tier-2/3 locations checked, the player
-        receives at least one of the four rocketry progression bundles.
-        This prevents a seed where no usable rocket engines arrive early.
-        """
-        early_locations = [
-            "Tech: Basic Rocketry",
-            "Tech: Engineering 101",
-            "Tech: Survivability",
-            "Tech: Stability",
-            "Tech: General Rocketry",
-        ]
-        rocketry_items = [
-            "Parts: Basic Rocketry",
-            "Parts: General Rocketry",
-            "Parts: Advanced Rocketry",
-            "Parts: Heavier Rocketry",
-        ]
-        loc_name  = self.random.choice(early_locations)
-        item_name = self.random.choice(rocketry_items)
-        loc = self.multiworld.get_location(loc_name, self.player)
-        # Remove one matching item from the pool (create_items already placed it).
-        item_to_remove = next(
-            (item for item in self.multiworld.itempool
-             if item.player == self.player and item.name == item_name),
-            None,
-        )
-        if item_to_remove is not None:
-            self.multiworld.itempool.remove(item_to_remove)
-        loc.place_locked_item(self.create_item(item_name))
 
     def get_filler_item_name(self) -> str:
         return self.random.choice(list(FILLER_ITEMS.keys()))
