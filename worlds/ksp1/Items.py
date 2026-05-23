@@ -90,7 +90,6 @@ PART_BUNDLE_TIER_7: dict[str, ItemData] = {
 
 # --- Tier 8 ---
 PART_BUNDLE_TIER_8: dict[str, ItemData] = {
-    "Parts: Nanolathing":                  ItemData(BASE_ID + 47, ItemClassification.useful,      "nanolathing"),
     "Parts: Advanced Unmanned Tech":       ItemData(BASE_ID + 48, ItemClassification.useful,      "advUnmanned"),
     "Parts: Meta-Materials":               ItemData(BASE_ID + 49, ItemClassification.useful,      "metaMaterials"),
     "Parts: Very Heavy Rocketry":          ItemData(BASE_ID + 50, ItemClassification.progression, "veryHeavyRocketry"),
@@ -113,11 +112,10 @@ PART_BUNDLE_TIER_9: dict[str, ItemData] = {
 # --- Tier 10 ---
 PART_BUNDLE_TIER_10: dict[str, ItemData] = {
     "Parts: Experimental Science":         ItemData(BASE_ID + 59, ItemClassification.useful,      "experimentalScience"),
-    "Parts: Experimental Motors":          ItemData(BASE_ID + 60, ItemClassification.useful,      "experimentalMotors"),
     "Parts: Experimental Electrics":       ItemData(BASE_ID + 61, ItemClassification.useful,      "experimentalElectrics"),
 }
 
-# One part bundle per tech tree node (63 total, including the start node).
+# One part bundle per tech tree node (61 total, including the start node).
 PART_BUNDLE_ITEMS: dict[str, ItemData] = {
     **PART_BUNDLE_TIER_1,
     **PART_BUNDLE_TIER_2,

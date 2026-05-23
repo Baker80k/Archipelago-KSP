@@ -3,13 +3,13 @@ Kerbal Space Program - Career Mode APWorld
 
 Locations
 ---------
-- Tech tree nodes (62): checked when the player researches a node via R&D.
+- Tech tree nodes (60): checked when the player researches a node via R&D.
 - KSC building upgrades (18): checked when each building reaches level 2 or 3.
 - Flag plants (15): checked when a flag is planted on any solid-surface body.
 
 Items
 -----
-- Part bundles (63): one per tech node including the 'start' node. Each bundle
+- Part bundles (61): one per tech node including the 'start' node. Each bundle
   makes parts from that node buildable in the VAB/SPH. Receiving a bundle for a
   researchable node also unlocks it in R&D.
 - SOI permits (15): one per reachable body. Without a permit, entering that body's

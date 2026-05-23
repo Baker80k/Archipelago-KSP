@@ -90,7 +90,6 @@ TECH_TIER_7: dict[str, LocationData] = {
 
 # --- Tier 8 ---
 TECH_TIER_8: dict[str, LocationData] = {
-    "Tech: Nanolathing":                  LocationData(TECH_LOC_BASE + 47, "nanolathing"),
     "Tech: Advanced Unmanned Tech":       LocationData(TECH_LOC_BASE + 48, "advUnmanned"),
     "Tech: Meta-Materials":               LocationData(TECH_LOC_BASE + 49, "metaMaterials"),
     "Tech: Very Heavy Rocketry":          LocationData(TECH_LOC_BASE + 50, "veryHeavyRocketry"),
@@ -111,11 +110,10 @@ TECH_TIER_9: dict[str, LocationData] = {
 # --- Tier 10 ---
 TECH_TIER_10: dict[str, LocationData] = {
     "Tech: Experimental Science":         LocationData(TECH_LOC_BASE + 59, "experimentalScience"),
-    "Tech: Experimental Motors":          LocationData(TECH_LOC_BASE + 60, "experimentalMotors"),
     "Tech: Experimental Electrics":       LocationData(TECH_LOC_BASE + 61, "experimentalElectrics"),
 }
 
-# Tech tree node locations - one per researchable node (62 total, tiers 2-10).
+# Tech tree node locations - one per researchable node (60 total, tiers 2-10).
 TECH_LOCATIONS: dict[str, LocationData] = {
     **TECH_TIER_2,
     **TECH_TIER_3,
